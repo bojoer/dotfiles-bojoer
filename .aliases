@@ -1,0 +1,628 @@
+# Easier navigation: .., ..., ...., ....., ~ and -
+alias cd..="cd .."
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ~="cd $HOME" # `cd` is probably faster to type though
+alias home="cd $HOME"
+alias -- -="cd -"
+alias root="cd /"
+
+# Shortcuts
+alias d="cd ~/Documents/Dropbox"
+alias dl="cd ~/Downloads"
+alias dt="cd ~/Desktop"
+alias p="cd ~/Projects"
+alias g="git"
+alias m="hg"
+alias s="svn"
+alias v="vim"
+alias h="history"
+alias j="jobs"
+
+# mv, rm, cp
+alias mv='mv -v'
+alias rm='rm -i -v'
+alias cp='cp -v'
+
+alias brwe=brew  #typos
+alias cask='brew cask' # i <3 u cask
+alias where=which # sometimes i forget
+
+# be nice
+alias sudo='sudo '	# Enable aliases to be sudo’ed
+alias please=sudo
+alias hosts='sudo $EDITOR /etc/hosts'
+alias search=sift
+alias gzip="gzip -9n" # set strongest compression level as ‘default’ for gzip
+alias ungz="gunzip -k"
+
+# show file content
+alias show.bashrc="c ~/.bashrc"
+alias show.bash_profile="c ~/.bash_profile"
+alias show.bash_prompt="c ~/.bash_prompt"
+alias show.login="c ~/.bash_login"
+alias show.aliases="c ~/.aliases"
+alias show.exports="c ~/.exports"
+alias show.functions="c ~/.functions"
+alias show.curlrc="c ~/.curlrc"
+alias show.gemrc="c ~/.gemrc"
+alias show.gitattributes="c ~/.gitattributes"
+alias show.gitconfig="c ~/.gitconfig"
+alias show.gitconfig_local="c ~/.gitconfig_local"
+alias show.gitignore="c ~/.gitignore"
+alias show.gitignore_global="c ~/.gitignore_global"
+#alias show.gitk="c ~/.gitk"
+alias show.hgignore_global="c ~/.hgignore_global"
+alias show.inputrc="c ~/.inputrc"
+#alias show.irbrc="c ~/.irbrc"
+#alias show.lesshst="c ~/.lesshst"
+alias show.mongorcjs="c ~/.mongorc.js"
+#alias show.pearrc="c ~/.pearrc"
+#alias show.rvmrc="c ~/.rvmrc"
+alias show.vimrc="c ~/.vimrc"
+alias show.z="c ~/.z"
+alias show.zlogin="c ~/.zlogin"
+#alias show.zlogout="c ~/.zlogout"
+#alias show.zprofile="c ~/.zprofile"
+#alias show.zshenv="c ~/.zshenv"
+alias show.zshrc="c ~/.zshrc"
+alias show.hosts="c /etc/hosts"
+
+# edit files
+alias edit.bashrc="$EDITOR ~/.bashrc"
+alias edit.bash_profile="$EDITOR ~/.bash_profile"
+alias edit.bash_prompt="$EDITOR ~/.bash_prompt"
+alias edit.login="$EDITOR ~/.bash_login"
+alias edit.aliases="$EDITOR ~/.aliases"
+alias edit.exports="$EDITOR ~/.exports"
+#alias edit.emacs="$EDITOR ~/.emacs"
+alias edit.functions="$EDITOR ~/.functions"
+alias edit.curlrc="$EDITOR ~/.curlrc"
+alias edit.gemrc="$EDITOR ~/.gemrc"
+alias edit.gitattributes="$EDITOR ~/.gitattributes"
+alias edit.gitconfig="$EDITOR ~/.gitconfig"
+alias edit.gitconfig_local="$EDITOR ~/.gitconfig_local"
+alias edit.gitignore="$EDITOR ~/.gitignore"
+alias edit.gitignore_global="$EDITOR ~/.gitignore_global"
+#alias edit.gitk="$EDITOR ~/.gitk"
+alias edit.hgignore_global="$EDITOR ~/.hgignore_global"
+alias edit.inputrc="$EDITOR ~/.inputrc"
+#alias edit.irbrc="$EDITOR ~/.irbrc"
+#alias edit.lesshst="$EDITOR ~/.lesshst"
+alias edit.mongorcjs="$EDITOR ~/.mongorc.js"
+#alias edit.pearrc="$EDITOR ~/.pearrc"
+#alias edit.rvmrc="$EDITOR ~/.rvmrc"
+alias edit.vimrc="$EDITOR ~/.vimrc"
+alias edit.z="$EDITOR ~/.z"
+alias edit.zlogin="$EDITOR ~/.zlogin"
+#alias edit.zlogout="$EDITOR ~/.zlogout"
+#alias edit.zprofile="$EDITOR ~/.zprofile"
+#alias edit.zshenv="$EDITOR ~/.zshenv"
+alias edit.zshrc="$EDITOR ~/.zshrc"
+
+
+# reload after changes
+alias reload.bash="source ~/.bash_profile"
+alias reload.aliases="source ~/.aliases"
+
+# preview a file using QuickLook
+alias ql="qlmanage -p 2>/dev/null"
+
+###
+# time to upgrade `ls`
+
+# use coreutils `ls` if possible…
+hash gls >/dev/null 2>&1 || alias gls="ls"
+
+# always use color, even when piping (to awk,grep,etc)
+if gls --color > /dev/null 2>&1; then colorflag="--color"; else colorflag="-G"; fi;
+export CLICOLOR_FORCE=1
+
+# ls options: A = include hidden (but not . or ..), F = put `/` after folders, h = byte unit suffixes
+alias ls='gls -AFh ${colorflag} --group-directories-first'
+alias lsd='ls -l | grep "^d"' # only directories
+#    `la` defined in .functions
+# List all files colorized in long format
+alias l="ls -lF ${colorflag}"
+# List all files colorized, including dot files
+alias laa="ls -aF ${colorflag}"
+# List all files colorized in long format, including dot files
+alias lla="ls -laF ${colorflag}"
+
+# List only directories
+alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
+alias ld='ls -l ${colorflag} | grep "^d"'
+# list details directory colorized
+alias ldd='ls -d ${colorflag}'
+# list directory details colorized in long format
+alias lld="ls -ld ${colorflag}"
+###
+
+
+# `cat` with beautiful colors. requires: sudo easy_install -U Pygments
+alias c='pygmentize -O style=monokai -f console256 -g'
+
+###
+# GIT STUFF
+
+# Undo a `git push`
+alias undopush="git push -f origin HEAD^:master"
+
+# git root
+alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
+
+# Get week number
+alias week='date +%V'
+
+# Stopwatch
+alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
+
+# Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
+alias update='softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm -g install npm@latest; npm -g update; gem update --system; gem update'
+
+# Networking. IP address, dig, DNS
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+#    `localip` defined in .functions
+alias dig="dig +nocmd any +multiline +noall +answer"
+
+# Get detailed list of current connections with some specific OPTION variants. 
+alias conn.all="lsof -Pni4"
+alias conn.listen="lsof -Pni4 | grep LISTEN"
+alias conn.established="lsof -Pni4 | grep ESTABLISHED"
+alias conn.node.udp="lsof -Pni4 | grep UDP"
+alias conn.node.tcp="lsof -Pnni4 | grep TCP"
+alias conn.get="lsof -Pni4 | grep GET"
+alias conn.post="lsof -Pni4 | grep POST"
+# Get list of process statusses. ps.aux.grep supports a seach word.
+alias ps.aux="ps aux"
+alias ps.aux.grep="ps aux | grep"
+
+# Enhanced WHOIS lookups
+alias whois="whois -h whois-servers.net"
+
+# Flush Directory Service cache
+alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
+
+# Clean up LaunchServices to remove duplicates in the “Open With” menu
+alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
+
+# Recursively delete `.DS_Store` files
+alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"
+alias root_cleanup_dsstore="sudo find / -name '*.DS_Sore' -type f -ls -delete"
+
+alias diskspace_report="df -P -kHl"
+alias free_diskspace_report="diskspace_report"
+
+# View HTTP traffic
+alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
+alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+
+# Canonical hex dump; some systems have this symlinked
+type -t hd > /dev/null || alias hd="hexdump -C"
+
+# OS X has no `md5sum`, so use `md5` as a fallback
+#type -t md5sum > /dev/null || alias md5sum="md5"
+
+# OS X has no `sha1sum`, so use `shasum` as a fallback
+#command -v sha1sum > /dev/null || alias sha1sum="shasum"
+
+# Trim new lines and copy to clipboard
+alias trimcopy="tr -d '\n' | pbcopy"
+
+# JavaScriptCore REPL
+jscbin="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc";
+[ -e "${jscbin}" ] && alias jsc="${jscbin}";
+unset jscbin;
+
+## File Information
+# Size of file in bytes
+alias fs='stat -c "%s bytes"'
+# User ID and Name of the owner
+alias fs.owner='stat -c "The file OWNER listens to the NAME: %U and USER ID: %u, belongs to USER GROUP: %G with GROUP ID: %g."'
+# Time of file birth, human-readable; - if unknown
+alias fs.birth="stat -c %w"
+# Time of last file access
+alias fs.lfa="stat -c %x"
+# Time of last data modification
+alias fs.ldm="stat -c %y"
+#Time of last status change
+alias fs.lsc="stat -c %z"
+# ROT13-encode text. Works for decoding, too! ;)
+alias rot13='tr a-zA-Z n-za-mN-ZA-M'
+
+# Empty the Trash on all mounted volumes and the main HDD
+# Also, clear Apple’s System Logs to improve shell startup speed
+alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
+
+# Hide/show all desktop icons (useful when presenting)
+alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+
+# Hide/show hidden files in Finder
+alias hidehidden="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+alias showhidden="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+
+# Merge PDF files
+# Usage: `mergepdf -o output.pdf input{1,2,3}.pdf`
+alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py'
+
+# Disable Spotlight
+alias spotoff="sudo mdutil -a -i off"
+# Enable Spotlight
+alias spoton="sudo mdutil -a -i on"
+
+# PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
+alias plistbuddy="/usr/libexec/PlistBuddy"
+
+# Ring the terminal bell, and put a badge on Terminal.app’s Dock icon
+# (useful when executing time-consuming commands)
+alias badge="tput bel"
+
+# Intuitive map function
+# For example, to list all directories that contain a certain file:
+# find . -name .gitattributes | map dirname
+alias map="xargs -n1"
+
+# Empty the Trash on all mounted volumes and the main HDD. then clear the useless sleepimage
+alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; rm -rfv ~/.Trash; sudo rm /private/var/vm/sleepimage"
+
+# Update installed Ruby gems, Homebrew, npm, and their installed packages
+alias brew_update="brew -v update; brew -v upgrade --all; brew cleanup; brew cask cleanup; brew prune; brew doctor"
+alias update_brew_npm_gem='brew_update; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update --no-rdoc --no-ri'
+
+# One of @janmoesen’s ProTip™s
+for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
+	alias "$method"="lwp-request -m '$method'"
+done
+
+# Make Grunt print stack traces by default
+command -v grunt > /dev/null && alias grunt="grunt --stack"
+
+# Kill all the tabs in Chrome to free up memory
+# [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
+alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
+
+# Lock the screen (when going AFK)
+alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+
+# Reload the shell (i.e. invoke as a login shell)
+alias reload="exec $SHELL -l"
+
+## Custom shortcuts for shorter commands
+# Homebrew
+alias brew.upd="clear && brupd && brout && brcle"
+alias brew.upg="clear && brupg && brcle"
+alias brew.clean="brew cleanup --force -s"
+alias brew.clean.cache="rm -rf $(brew --cache)/**"
+alias brew.clean.all="brew.clean && brew.clean.cache"
+
+alias brout="brew outdated"
+alias brinf="brew info "
+alias bropt="brew options "
+alias brins="brew install "
+alias bruni="brew uninstall "
+alias brupd="brew update "
+alias brupg="brew upgrade "
+alias brsho="brew show "
+alias brsea="brew search "
+alias brcat="brew cat "
+alias bredi="brew edit "
+alias brcle="brew cleanup --force -sn"
+alias brlis="brew list"
+alias braud="brew audit "
+alias brdoc="brew doctor"
+
+alias cd.broot="cd $(brew --prefix)"
+alias cd.brcel="cd $(brew --cellar)"
+alias cd.brcac="cd $(brew --cache)"
+alias cd.brlib="cd $(brew --prefix)/Library/"
+
+alias ls.broot="l $(brew --prefix)"
+alias ls.brcel="l $(brew --cellar)"
+alias ls.brcac="l $(brew --cache)"
+alias ls.brlib="l $(brew --prefix)/Library/"
+
+## brew kegs aliases
+
+
+## NVM
+alias nvm.up="~/.nvm/install.sh"
+alias nvm.cur="nvm current"
+alias nvm.use.def="nvm use default"
+alias nvm.use.cur="nvm use current"
+alias nvm.use.sta="nvm use stable"
+alias nvm.use.lts="nvm use latest"
+alias nvm.use.10="nvm use 0.10"
+alias nvm.use.11="nvm use 0.11"
+alias nvm.use.12="nvm use 0.12"
+
+## NPM
+alias npm.ls="npm ls --depth=0"
+alias npm.g.ls="clear && npm ls -g --depth=0"
+alias npm.out="npm out"
+alias npm.g.out="clear && npm out -g"
+alias npm.up="npm up"
+alias npm.g.up="clear && npm up -g"
+alias npm.ins="npm install"
+alias npm.g.ins="npm install -g"
+alias npm.un="npm un "
+alias npm.g.un="npm un -g"
+
+alias npm.cache.add="npm cache add "
+alias npm.cache.clear="npm cache clear"
+alias npm.cache.list="npm cache list"
+
+## RVM
+alias rvm.up="rvm get stable"
+alias rvm.gem.ls="rvm all do gem list"
+alias rvm.gem.upd="rvm all do gem update"
+alias rvm.gem.out="rvm all do gem outdated"
+
+alias rvm.gem.ls.def="rvm default do gem list"
+alias rvm.gem.upd.def="rvm default do gem update"
+alias rvm.gem.out.def="rvm default do gem outdated"
+
+alias rvm.gem.ls.sta="rvm stable do gem list"
+alias rvm.gem.upd.sta="rvm stable do gem update"
+alias rvm.gem.out.sta="rvm stable do gem outdated"
+
+alias rvm.gem.ls.2.1="rvm 2.1 do gem list"
+alias rvm.gem.upd.2.1="rvm 2.1 do gem update"
+alias rvm.gem.out.2.1="rvm 2.1 do gem outdated"
+
+## Local servers related aliases
+# Apache System
+alias apache-start="sudo apachectl start"
+alias apache-stop="sudo apachectl stop"
+alias apache-graceful-stop="sudo apachectl graceful-stop"
+alias apache-restart="sudo apachectl restart"
+alias apache-graceful="sudo apachectl graceful"
+alias apache-fullstatus="sudo apachectl fullstatus"
+alias apache-status="sudo apachectl status"
+alias apache-configtest="sudo apachectl configtest"
+
+# httpd
+#alias httpd-defined="/usr/sbin/httpd -D "
+#alias httpd-alt-root="/usr/sbin/httpd -d "
+#alias httpd-alt-config="/usr/sbin/httpd -f "
+#alias httpd-process-before="/usr/sbin/httpd -D "
+#alias httpd-process-after="/usr/sbin/httpd -d "
+#alias httpd-show-errors="/usr/sbin/httpd -e "
+#alias httpd-log-errors="/usr/sbin/httpd -E "
+#alias httpd-version="/usr/sbin/httpd -v"
+#alias httpd-show-settings="/usr/sbin/httpd -V"
+#alias httpd-help="/usr/sbin/httpd -h"
+#alias httpd-compiled-modules="/usr/sbin/httpd -l"
+#alias httpd-configuration-directives="/usr/sbin/httpd -L"
+#alias httpd-modules="/usr/sbin/httpd -M"
+#alias httpd-vhosts="/usr/sbin/httpd -S"
+#alias httpd-check-config="/usr/sbin/httpd -t"
+#alias httpd-start-docroot="/usr/sbin/httpd -T"
+
+
+## local ZendServer
+#Zend
+#alias zend.server.start="sudo /usr/local/zend/bin/zendctl.sh start"
+#alias zend.server.stop="sudo /usr/local/zend/bin/zendctl.sh stop"
+#alias zend.server.restart="sudo /usr/local/zend/bin/zendctl.sh restart"
+
+# Apache
+#alias zend.apache.start="sudo /usr/local/zend/bin/zendctl.sh start-apache"
+#alias zend.apache.stop="sudo /usr/local/zend/bin/zendctl.sh stop-apache"
+#alias zend.apache.restart="sudo /usr/local/zend/bin/zendctl.sh restart-apache"
+
+# MySQL
+#alias zend.mysql.start="sudo /usr/local/zend/bin/zendctl.sh start-mysql"
+#alias zend.mysql.stop="sudo /usr/local/zend/bin/zendctl.sh stop-mysql"
+#alias zend.mysql.restart="sudo /usr/local/zend/bin/zendctl.sh restart-mysql"
+
+
+## Local server(s) 
+# NGINX
+alias nginx.start='sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.nginx.plist'
+alias nginx.stop='sudo launchctl unload -w /Library/LaunchDaemons/homebrew.mxcl.nginx.plist'
+alias nginx.restart='nginx.stop && nginx.start'
+alias nginx.test="sudo nginx -t"
+
+alias nginx.cd.conf="cd /usr/local/etc/nginx"
+alias nginx.cd.conf.d="cd /usr/local/etc/nginx/conf.d"
+alias nginx.cd.logs="cd /usr/local/etc/nginx/logs/"
+alias nginx.cd.sitesav="cd /usr/local/etc/nginx/sites-available"
+alias nginx.cd.sitesen="cd /usr/local/etc/nginx/sites-enabled"
+
+alias nginx.show.conf="c /usr/local/etc/nginx/nginx.conf"
+alias nginx.show.conf.d.php-fpm="c /usr/local/etc/nginx/conf.d/php-fpm.conf"
+alias nginx.show.conf.d.passenger="c /usr/local/etc/nginx/conf.d/php-fpm.conf"
+
+alias nginx.edit.conf="v /usr/local/etc/nginx/nginx.conf"
+alias nginx.edit.conf.d.php-fpm="v /usr/local/etc/nginx/conf.d/php-fpm.conf"
+alias nginx.edit.conf.d.passenger="v /usr/local/etc/nginx/conf.d/php-fpm.conf"
+
+# HOSTS & Virtual HOSTS
+alias list.wwwroot="l /var/www"
+alias list.vhosts="l /var/www/vhosts"
+alias list.vhosts.nodejs="l /var/www/vhosts/node.js"
+alias list.vhosts.rails="l /var/www/vhosts/rails"
+alias list.vhosts.sencha="l /var/www/vhosts/sencha"
+alias list.vhosts.python="l /var/www/vhosts/python"
+
+alias cd.wwwroot="cd /var/www"
+alias cd.vhosts="cd /var/www/vhosts"
+alias cd.vhosts.nodejs="cd /var/www/vhosts/node.js"
+alias cd.vhosts.rails="cd /var/www/vhosts/rails"
+alias cd.vhosts.sencha="cd /var/www/vhosts/sencha"
+alias cd.vhosts.python="cd /var/www/vhosts/python"
+
+
+# PASSENGER
+alias passenger.stats="sudo passenger-status"
+alias passenger.memstats="passenger-memory-stats"
+
+# PHP-FPM
+alias php-fpm.start="launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.php55.plist"
+alias php-fpm.stop="launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.php55.plist"
+alias php-fpm.restart='php-fpm.stop && php-fpm.start'
+alias php-fpm.test="php-fpm -t"
+
+alias php-fpm.show.conf="c /usr/local/etc/php/5.5/php-fpm.conf"
+alias php-fpm.edit.conf="v /usr/local/etc/php/5.5/php-fpm.conf"
+
+# PHP
+alias php.show.ini="c /usr/local/etc/php/5.5/php.ini"
+alias php.edit.ini="v /usr/local/etc/php/5.5/php.ini"
+
+# ElasticSearch
+alias es.start="launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch.plist"
+alias es.stop="launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch.plist"
+alias es.restart="es.stop && es.start"
+alias es.show.yml="c /usr/local/opt/elasticsearch/config/elasticsearch.yml"
+alias es.edit.yml="v /usr/local/opt/elasticsearch/config/elasticsearch.yml"
+
+# Amazon WebServices (AWS)
+#alias aws.show.
+#alias aws.edit.
+alias aws.list.samples="lla /usr/local/share/awscli/examples"
+
+# Perforce
+alias perforce.start="launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.perforce-server.plist"
+alias perforce.stop="launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.perforce-server.plist"
+alias perforce.restart="perforce.stop && perforce.stop"
+
+## DATABASES
+# MariaDB (MySQL)
+alias mariadb.start="launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.mariadb.plist"
+alias mariadb.stop="launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.mariadb.plist"
+alias mariadb.restart="mariadb.stop && mariadb.start"
+
+# PostgreSQL
+alias postgresql.start="launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"
+alias postgresql.stop="launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"
+alias postgresql.restart="postgresql.stop && postgresql.start"
+
+# MongoDB
+alias mongodb.start="launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist"
+alias mongodb.stop="launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist"
+alias mongodb.restart="mongodb.stop && mongodb.start"
+
+# CouchDB
+alias couchdb.start="launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.couchdb.plist"
+alias couchdb.stop="launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.couchdb.plist"
+alias couchdb.restart="couchdb.stop && couchdb.start"
+
+# Cassandra
+alias cassandra.start="launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.cassandra.plist"
+alias cassandra.stop="launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.cassandra.plist"                                                          
+alias cassandra.restart="cassandra.stop && cassandra.start"
+
+# Redis
+alias redis.start="launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.redis.plist"
+alias redis.stop="launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.redis.plist"
+alias redis.restart="redis.stop && redis.start"
+
+# Rabbit with RabbitMQ on http://localhost:15672
+alias rabbit.start="launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.rabbitmq.plist"
+alias rabbit.stop="launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.rabbitmq.plist"
+alias rabbit.restart="rabbit.stop && rabbit.start"
+
+# Gearman
+alias gearman.start="launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.gearman.plist"
+alias gearman.stop="launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.gearman.plist"
+alias gearman.restart="gearman.stop && gearman.start"
+
+# Neo4j
+alias neo4j.start="launchctl load -w ~/Library/LaunchAgents/org.neo4j.server.plist"
+alias neo4j.stop="launchctl unload -w ~/Library/LaunchAgents/org.neo4j.server.plist"
+alias neo4j.restart="neo4j.stop && neo4j.start"
+
+# InfluxDB
+alias influxdb.start="launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.influxdb.plist"
+alias influxdb.stop="launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.influxdb.plist"
+alias influxdb.restart="influxdb.stop && influxdb.start"
+
+# MemcacheD
+alias memcached.start="launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.memcached.plist"
+alias memcached.stop="launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.memcached.plist"
+alias memcached.restart="memcached.stop && memcached.start"
+
+# dBus Session
+alias dbus.start="launchctl load -w ~/Library/LaunchAgents/org.freedesktop.dbus-session.plist"
+alias dbus.stop="launchctl unload -w ~/Library/LaunchAgents/org.freedesktop.dbus-session.plist"
+alias dbus.restart="dbus.stop && dbus.start"
+
+# Hosts log files
+alias nginx.logs.error='tail -250f /usr/local/etc/nginx/logs/error.log'
+alias nginx.logs.access='tail -250f /usr/local/etc/nginx/logs/access.log'
+alias nginx.logs.default.access='tail -250f /usr/local/etc/nginx/logs/default.access.log'
+alias nginx.logs.default-ssl.access='tail -250f /usr/local/etc/nginx/logs/default-ssl.access.log'
+alias nginx.logs.phpmyadmin.error='tail -250f /usr/local/etc/nginx/logs/phpmyadmin.error.log'
+alias nginx.logs.phpmyadmin.access='tail -250f /usr/local/etc/nginx/logs/phpmyadmin.access.log'
+alias nginx.logs.pgmyadmin.error='tail -250f /usr/local/etc/nginx/logs/pqmyadmin.error.log'
+alias nginx.logs.pgmyadmin.access='tail -250f /usr/local/etc/nginx/logs/pqmyadmin.access.log'
+alias nginx.logs.moadmin.error='tail -250f /usr/local/etc/nginx/logs/moadmin.error.log'
+alias nginx.logs.moadmin.access='tail -250f /usr/local/etc/nginx/logs/moadmin.access.log'
+
+
+# My Node Workshopper-based workshops
+alias ws.AsyncYou="%HOME%/Projects/Node.js/Workshopper/Workshops/node_modules/async-you.js"
+alias ws.BrowserifyAdventure="browserify-adventure"
+alias ws.BugClinic="bug-clinic"
+alias ws.Bytewiser="bytewiser"
+alias ws.Constructor="constructor-workshop"
+alias ws.CountTo6="count-to-6"
+alias ws.DataPlumber="data-plumber"
+alias ws.ExampleAdventure="example-adventure"
+alias ws.Expressworks="expressworks"
+alias ws.Footballbot="footballbot-workshop"
+alias ws.Function="function-workshop"
+alias ws.FunctionalJs="functional-javascript"
+alias ws.GitIt="git-it"
+alias ws.GoingNative="goingntive"
+alias ws.IntroToWebGL="introtowebgl"
+alias ws.JsAdventure="jsadventure"
+alias ws.JavaScripting="javascripting"
+alias ws.KickOffKoa="kick-off-koa"
+alias ws.Lasercat="lasercat-workshop"
+alias ws.LearnYouCouchDB="learnyoucouchdb"
+alias ws.LearnYouMongoDB="learnyoumongodb"
+alias ws.LearnYouNode="learnyounode"
+alias ws.LearnYouNode.Revamp="learnyounode_1and1"
+alias ws.LevelMeUp="levelmeup"
+alias ws.LoLoLoDash="lololodash"
+alias ws.MakeMeHapi="makemehapi"
+alias ws.ModellingWithMongoose="modelling-with-mongoose"
+alias ws.MongoDBAggregateAdventure="mongodb-aggregte-adventure"
+alias ws.MongooseAdventure="mongoose-adventure"
+alias ws.NodeBot="nodebot-workshop"
+alias ws.NodeNext="nodenext"
+alias ws.PlanetProto="planetproto"
+alias ws.PromiseItWontHurt="promise-it-wont-hurt"
+alias ws.SecurityAdventure="security-adventure"
+alias ws.ShaderSchool="shader-school"
+alias ws.StreamAdventure="stream-adventure"
+alias ws.TestAnything="test-anything"
+alias ws.ThinkingInReact="thinking-in-react"
+alias ws.UnixAdventure="unix-adventure"
+alias ws.ViewSchool="view-school"
+alias ws.WebGlWorkshop="webgl-workshop"
+alias ws.ZeroOne="zeroone"
+
+alias ws.NPM="~/node_modules/.bin/npm-workshop"
+alias nodeMirror="~/node_modules/.bin/nodeMirror"
+alias tetris="~/node_modules/.bin/tetris"
+alias ntetris="~/node_modules/.bin/ntetris"
+
+# cool stuff
+# Upload image to Imgur and return its URL. Get API key at http://imgur.com/register/api_anon                               
+imgur() { curl -F "image=@$1" -F "key=5a5141ca9354bf7929b98a1d7a4c26ae" https://api.imgur.com/2/upload.json | egrep -o "<original>.+?</original>" | egrep -o "http://imgur\.com/[^<]+" | sed "s/imgur.com/i.imgur.com/" | tee >(pbcopy); } 
+
+# handy things
+#alias bunyip='node ~/node_modules/bunyip/cli.js'
+#alias spotify="osascript ~/Development/UserScripts/SpotifyControl/SpotifyControl.scpt"
+#alias vlc="osascript ~/Development/UserScripts/VLCControl/VLCControl.scpt"
+
+# Stuff I never really use but cannot delete either because of http://xkcd.com/530/
+#alias stfu="osascript -e 'set volume output muted true"
+#alias pumpitup="osascript -e 'set volume 10'"
+#alias hax="growlnotify -a 'Activity Monitor' 'System error' -m 'WTF R U DOIN'"

@@ -1,0 +1,16 @@
+      PATH=$HOME/.homebrew/bin
+PATH=$PATH:$HOME/bin
+PATH=$PATH:$HOME/bin/git-friendly
+PATH=$PATH:$HOME/.homebrew/opt/coreutils/libexec/gnubin
+PATH=$PATH:/usr/local/bin
+PATH=$PATH:/usr/bin
+PATH=$PATH:/bin
+PATH=$PATH:/usr/local/MacGPG2/bin
+PATH=$PATH:$HOME/.homebrew/sbin
+PATH=$PATH:/usr/local/sbin
+PATH=$PATH:/usr/sbin
+PATH=$PATH:/sbin
+
+export PATH
+
+MANPATH="$(brew --prefix coreutils)/libexec/gnuman:$MANPATH"
